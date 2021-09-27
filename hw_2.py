@@ -132,22 +132,26 @@ def save_report(link: str, link2: str):
 
 def ask_user(link: str, link2: str):
     """функция спрашивает пользователя, какая информация ему требуется и предоставляет ее"""
-    option = 0
-    options = {1: 'Вывести иерархию команд', 2: 'Вывести сводный отчет', 3: 'Сохранить сводный отчет'}
+    data = all_data(csv_file(link))
+    options = {1: 'Вывести иерархию команд', 2: 'Вывести сводный отчет', 3: 'Сохранить сводный отчет', 4: 'Выход'}
+    print('Выберете команду:')
     for k, v in options.items():
         print(f'{k} - {v}')
-    while option not in options:
-        print("Выберите действие: 1: 'Вывести иерархию команд', 2: 'Вывести сводный отчет', 3: 'Сохранить сводный отчет")
+    option = int(input())
+    while option != 4:
+        if option == 1:
+            print_dep_structure(data[0])
+        elif option == 2:
+            print_report(data[1])
+        elif option == 3:
+            save_report(link, link2)
+            print('Отчет сохранен')
+        else:
+            print('Неверный ввод')
+        print('Выберете команду:')
+        for k, v in options.items():
+            print(f'{k} - {v}')
         option = int(input())
-    data = all_data(csv_file(link))
-    if option == 1:
-        print_dep_structure(data[0])
-    elif option == 2:
-        print_report(data[1])
-    elif option == 3:
-        save_report(link, link2)
-    else:
-        return 0
 
 
 print('Введите название/путь исходного файла: ')
